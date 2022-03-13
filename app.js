@@ -10,24 +10,54 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+// console.log("FAANG Enterprises is really impressed with the progress you've made on helping us make a team! The final step is to get our new team members into our database. Please provide the details for the employees that you've hired.");
 
 // Write code to use inquirer to gather information about the development team members,
-const baseQs = [
+const onboardingQs = [
   {
     type: 'text',
     name: 'name',
     message: 'What is the name of the new hire?'
   },
   {
-    type: 'text',
+    type: 'number',
     name: 'id',
-    message: 'What is their id number?'
+    message: 'What is their id number? (numerical values only)'
   },
   {
     type: 'text',
     name: 'email',
     message: 'Please provide their email address.'
   },
+  {
+    type: 'list',
+    name: 'role.assignment',
+    message: "What is this person's role?",
+    choices: ['Manager', 'Engineer', 'Intern']
+  },
+  {
+    type: 'number',
+    name: 'role.manager',
+    message: 'What is their office number? (numerical values only)',
+    when: answer.role.assignment === "Manager"
+  },
+  {
+    type: 'input',
+    name: 'role.engineer',
+    message: 'What is their github username?',
+    when: answer.role.assignment === "Engineer"
+  },
+  {
+    type: 'input',
+    name: 'role.intern',
+    message: 'What school does this intern attend?',
+    when: answer.role.assignment === "Intern"
+  },
+  {
+    type: 'confirm',
+    name: 'role.intern',
+    message: 'Would you like to add another employee to the team?'
+  }
 ]
 
 
