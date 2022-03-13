@@ -1,0 +1,26 @@
+{
+  "name": "employee-generator",
+  "version": "1.0.0",
+  "description": "This is a commandline application that uses Node Inquirer and Jest packages.",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njacques47/employee-generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/njacques47/employee-generator/issues"
+  },
+  "homepage": "https://github.com/njacques47/employee-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.1",
+    "jest": "^27.5.1"
+  }
+}
