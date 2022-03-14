@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "mock-team.html");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const teamArray = [];
@@ -80,10 +80,10 @@ const onboardingQs = () => {
     .then(teamData => {
       employeeProfile(teamData);
       console.log(teamData)
-      if(teamData.addEmployee === true) {
-        return onboardingQs()
+      if (teamData.addEmployee === true) {
+        return onboardingQs();
       } else {
-        return `Thanks for providing the requested information.`
+        return `Thanks for providing the requested information.`;
       }
     })
 }
@@ -103,9 +103,9 @@ function employeeProfile(data) {
 
 const renderTeam = employees => {
   const teamTemplate = render(employees);
-  return new Promise ((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     fs.writeFile(outputPath, teamTemplate, err => {
-      if(err) {
+      if (err) {
         reject(err);
         return `error rendering team`;
       }
