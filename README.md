@@ -14,5 +14,5 @@ When provided the starter code, I initially had no clue what was going on and wh
 
 ## Deployments
 https://github.com/njacques47/employee-generator    
-[Extended Demo Video Link](https://drive.google.com/file/d/1nwwayvmPoFZ-PszdxQ_T2ey0AXkrcw_f/view?usp=sharing)
+[Extended Demo Video Link](https://drive.google.com/file/d/1nwwayvmPoFZ-PszdxQ_T2ey0AXkrcw_f/view?usp=sharing)     <br>
 [Demo Output Link](https://github.com/njacques47/employee-generator/blob/main/DEMO-team.html)   
