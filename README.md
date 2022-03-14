@@ -6,6 +6,7 @@ In order to get started with this project, clone this repo to your desired locat
 ==NOTE: for this application, multiple managers can be added when you add another employee.== 
 
 ## Demo
+![demo](./team-DEMO.gif)
 
 ## Challenges
 <!-- this is mostly a note to myself as to what made this project difficult -->
@@ -13,5 +14,5 @@ When provided the starter code, I initially had no clue what was going on and wh
 
 ## Deployments
 https://github.com/njacques47/employee-generator    
-[Demo Video Link](https://drive.google.com/file/d/1a7MdBJ1Sko75mNLfVUjU23yt0xwyOS0C/view)   (can also be viewed in my repo)
-[Demo Output Link]()   
+[Extended Demo Video Link](https://drive.google.com/file/d/1nwwayvmPoFZ-PszdxQ_T2ey0AXkrcw_f/view?usp=sharing)
+[Demo Output Link](https://github.com/njacques47/employee-generator/blob/main/DEMO-team.html)   
