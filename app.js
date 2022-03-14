@@ -10,22 +10,22 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// console.log("FAANG Enterprises is really impressed with the progress you've made on helping us make a team! The final step is to get our new team members into our database. Please provide the details for the employees that you've hired.");
-
-// Write code to use inquirer to gather information about the development team members,
-const onboardingQs = [
+// made this into a function to loop through if necessary (previously just an array of Qs)
+function onboardingQs() {
+  inquirer
+    .prompt([
   {
-    type: 'text',
+    type: 'input',
     name: 'name',
     message: 'What is the name of the new hire?'
   },
   {
-    type: 'number',
+    type: 'number', 
     name: 'id',
     message: 'What is their id number? (numerical values only)'
   },
   {
-    type: 'text',
+    type: 'input',
     name: 'email',
     message: 'Please provide their email address.'
   },
@@ -55,11 +55,35 @@ const onboardingQs = [
   },
   {
     type: 'confirm',
-    name: 'role.intern',
+    name: 'addEmployee',
     message: 'Would you like to add another employee to the team?'
   }
-]
+  ])
+}
 
+// runs all the important things to make the app work
+function buildTeam() {
+  // explains what they are doing with this app
+  console.log(`
+  FAANG Corp is really impressed with the progress you've made setting up a new team! We just need the information of each employee to set up their chain of command. Please provide the requested details.
+  =====================================================================================================
+  `);
+
+  // prompt Qs
+  inquirer
+    .prompt(onboardingQs)
+    .then((teamData) => {
+      // if they would like to add another employee, 
+      if (teamData.addEmployee === true) {
+        return inquirer.prompt(onboardingQs(teamData));
+      }
+
+
+    })
+}
+
+
+// buildTeam();
 
 // and to create objects for each team member (using the correct classes as blueprints!)
 
