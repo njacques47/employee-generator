@@ -6,13 +6,14 @@ const path = require("path");
 const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// changed the name to keep track of demos...will change back for final push
+const outputPath = path.join(OUTPUT_DIR, "mock-team.html");
 
 const render = require("./lib/htmlRenderer");
-// push created employees here??
+// push created employees here
 const teamArray = [];
 
-// made this into a function to loop through if necessary (previously just an array of Qs)
+// made this into a function to loop through if necessary (previously just an array of Qs) 
 const onboardingQs = () => {
   return inquirer
     .prompt([{
@@ -86,7 +87,8 @@ const onboardingQs = () => {
       if(teamData.addEmployee === true) {
         return onboardingQs()
       } else {
-        return `Since there are no more additions to the team, you'll be notified when the details have been assembled.`
+        // updated to return data to pass along to next fn...will check on this if needed [returned onboardingData instead for understanding flow]
+        return teamData
       }
     })
 }
@@ -108,6 +110,25 @@ function employeeProfile(data) {
   }
 }
 
+// write new file after all data is collected; keep an eye on the output to ensure all data is written to the file as expected
+const renderTeam = employees => {
+  // makes the code neater & provides more context to what is being rendered: our teamArray
+  const teamTemplate = render(employees);
+
+  // newPromise to compile everything before next step & return resolve/reject if there are issues
+  return new Promise ((resolve, reject) => {
+    fs.writeFile(outputPath, teamTemplate, err => {
+      if(err) {
+        reject(err);
+        return `error rendering team`; // note to self where this error is coming from
+      }
+
+      resolve('Success! Check the output folder for your new file.')
+    });
+  });
+}
+
+
 // runs all the important things to make the app work
 function buildTeam() {
   // explains what they are doing with this app
@@ -115,32 +136,25 @@ function buildTeam() {
 ============================================================================================
   `);
 
-  // we get our first employee!
+  // returns all team members
   onboardingQs()
-    // pushes employee to teamArr and checks to add more
-    // .then((teamData) => {
-    //   // add a new employee & push to teamArray
-    //   if (teamData.addEmployee === true || 'yes') {
-    //     employeeProfile(teamData);
-    //     onboardingQs();
-    //   }
-    //   // only push collected data to teamArray
-    //   if (teamData.addEmployee === false) {
-    //     return employeeProfile(teamData);
-    //   }
-    // })
-    .then((teamData) => {
-      console.log("Here's your new team!", teamArray);
+    // render the page using onboarding data
+    .then(() => {
+      return renderTeam(teamArray)
+    })
+    // confirmation that a new team was created
+    .then((renderResponse) => {
+      console.log(renderResponse);
     })
     .catch(err => {
-      console.log(err, "Error found")
-    })
+      console.log(err);
+    });
 }
 
 
 buildTeam();
 
-// and to create objects for each team member (using the correct classes as blueprints!)
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
