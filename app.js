@@ -13,95 +13,132 @@ const render = require("./lib/htmlRenderer");
 const teamArray = [];
 
 // made this into a function to loop through if necessary (previously just an array of Qs)
-function onboardingQs() {
-  inquirer
-    .prompt([
-  {
-    type: 'input',
-    name: 'name',
-    message: 'What is the name of the new hire?'
-  },
-  {
-    type: 'number', 
-    name: 'id',
-    message: 'What is their id number? (numerical values only)'
-  },
-  {
-    type: 'input',
-    name: 'email',
-    message: 'Please provide their email address.'
-  },
-  {
-    type: 'list',
-    name: 'role',
-    message: "What is this person's role?",
-    choices: ['Manager', 'Engineer', 'Intern']
-  },
-  {
-    type: 'number',
-    name: 'officeNumber',
-    message: 'What is their office number? (numerical values only)',
-    when: answer.role === "Manager"
-  },
-  {
-    type: 'input',
-    name: 'github',
-    message: 'What is their github username?',
-    when: answer.role === "Engineer"
-  },
-  {
-    type: 'input',
-    name: 'school',
-    message: 'What school does this intern attend?',
-    when: answer.role === "Intern"
-  },
-  {
-    type: 'confirm',
-    name: 'addEmployee',
-    message: 'Would you like to add another employee to the team?'
-  }
-  ])
+const onboardingQs = () => {
+  return inquirer
+    .prompt([{
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the new hire?',
+        validate(answer) {
+          if (!answer) {
+            return "Provide a valid entry."
+          }
+          return true
+        }
+      },
+      {
+        type: 'number',
+        name: 'id',
+        message: 'What is their id number? (numerical values only)'
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: 'Please provide their email address.',
+        validate(answer) {
+          if (!answer) {
+            return "Provide a valid entry."
+          }
+          return true
+        }
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: "What is this person's role?",
+        choices: ['Manager', 'Engineer', 'Intern']
+      },
+      {
+        type: 'number',
+        name: 'officeNumber',
+        message: 'What is their office number? (numerical values only)',
+        when(answer) {
+          return answer.role === "Manager"
+        }
+      },
+      {
+        type: 'input',
+        name: 'github',
+        message: 'What is their github username?',
+        when(answer) {
+          return answer.role === "Engineer"
+        }
+      },
+      {
+        type: 'input',
+        name: 'school',
+        message: 'What school does this intern attend?',
+        when(answer) {
+          return answer.role === "Intern"
+        }
+      },
+      {
+        type: 'confirm',
+        name: 'addEmployee',
+        message: 'Would you like to add another employee to the team?'
+      }
+    ])
+
+    // information finally looping based on condition (shout out to module 9)
+    .then(teamData => {
+      employeeProfile(teamData);
+      console.log(teamData)
+      if(teamData.addEmployee === true) {
+        return onboardingQs()
+      } else {
+        return `Since there are no more additions to the team, you'll be notified when the details have been assembled.`
+      }
+    })
 }
 
 // create new employees based on satisfied conditions
-function employeeProfile() {
+// added data parameter to pass populate how its supposed to
+function employeeProfile(data) {
   // if manager, return new manager obj and push it to array
-  if (teamData.role === 'Manager'){
-    //
-  }
-  // if engineer, return new engineer obj and push it to array
-  else if (teamData.role === 'Engineer'){
-    //
-  }
-  // if intern, return new intern obj and push it to array
-  else if (teamData.role === 'Intern'){
-    //
+  if (data.role === 'Manager') {
+    let manager = new Manager(data.name, data.id, data.email, data.officeNumber);
+    // push new manager object to array
+    teamArray.push(manager);
+  } else if (data.role === 'Engineer') {
+    let engineer = new Engineer(data.name, data.id, data.email, data.github);
+    teamArray.push(engineer);
+  } else if (data.role === 'Intern') {
+    let intern = new Intern(data.name, data.id, data.email, data.school);
+    teamArray.push(intern);
   }
 }
 
 // runs all the important things to make the app work
 function buildTeam() {
   // explains what they are doing with this app
-  console.log(`
-  FAANG Corp is really impressed with the progress you've made setting up a new team! We just need the information of each employee to set up their chain of command. Please provide the requested details.
-  =====================================================================================================
+  console.log(`Please provide the details for the team you've created by answering the following questions:
+============================================================================================
   `);
 
-  // prompt Qs
+  // we get our first employee!
   onboardingQs()
-  .then((teamData) => {
-    // if they would like to add another employee, add a new employee
-    if (teamData.addEmployee === true) {
-      return onboardingQs(teamData);
-    }
-
-    //
-
-  })
+    // pushes employee to teamArr and checks to add more
+    // .then((teamData) => {
+    //   // add a new employee & push to teamArray
+    //   if (teamData.addEmployee === true || 'yes') {
+    //     employeeProfile(teamData);
+    //     onboardingQs();
+    //   }
+    //   // only push collected data to teamArray
+    //   if (teamData.addEmployee === false) {
+    //     return employeeProfile(teamData);
+    //   }
+    // })
+    .then((teamData) => {
+      console.log("Here's your new team!", teamArray);
+    })
+    .catch(err => {
+      console.log(err, "Error found")
+    })
 }
 
 
-// buildTeam();
+buildTeam();
 
 // and to create objects for each team member (using the correct classes as blueprints!)
 
