@@ -6,7 +6,7 @@ In order to get started with this project, clone this repo to your desired locat
 ==NOTE: for this application, multiple managers can be added when you add another employee.== 
 
 ## Demo
-![demo](./team-DEMO.gif)
+The demo file was too large to be uploaded (and embedded) to this repository BUT all previews and demos can be found using the links under "Deployment". Thanks for understanding!
 
 ## Challenges
 <!-- this is mostly a note to myself as to what made this project difficult -->
